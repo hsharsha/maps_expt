@@ -24,6 +24,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe6xqV6Nb-34YfgQQNXR0Of_PPog0UiM0">
     </script>
     <script>
+        // LatLng for cleartech loop Singapore
         var mapCenter = new google.maps.LatLng(1.354, 103.694);
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 19,
@@ -47,6 +48,18 @@
             var Endpoint = new google.maps.LatLng(southWest.lat() + latSpan * Math.random(),southWest.lng() + lngSpan * Math.random());
             Endmarker.setPosition(Endpoint);
             Endmarker.setMap(map);
+            var bookingRequest = new Object();
+            bookingRequest.messageType = 'BookingRequest';
+            bookingRequest.version = 1;
+            // Some random number for token [0, 99]
+            bookingRequest.bookingToken = Math.floor(100 * Math.random());
+            // Some random number for customer token [0, 10]
+            bookingRequest.CustomerToken = Math.floor(10 * Math.random());
+            bookingRequest.ServiceType = 'Single';
+            bookingRequest.Origin = {'lat': Startpoint.lat(), 'lng': Startpoint.lng()};
+            bookingRequest.Destination = {'lat': Endpoint.lat(), 'lng': Endpoint.lng()};
+            bookingRequest.CreatedAt = new Date().getTime();
+            console.log(bookingRequest);
         });
     </script>
   </body>
