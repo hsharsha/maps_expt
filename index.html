@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cleantech Loop</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe6xqV6Nb-34YfgQQNXR0Of_PPog0UiM0">
+    </script>
+    <script>
+        var mapCenter = new google.maps.LatLng(1.354, 103.694);
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 19,
+            center: mapCenter
+        });
+        var Startmarker = new google.maps.Marker({position:mapCenter, label:{text:"Start Trip", color:"black"}});
+        var Endmarker = new google.maps.Marker({position:mapCenter, label:{text:"End Trip", color:"black"}});
+        Startmarker.setMap(map);
+        Endmarker.setMap(map);
+        google.maps.event.addListener(map, 'bounds_changed', function() {
+            Startmarker.setMap(null);
+            Endmarker.setMap(null);
+            var bounds = map.getBounds();
+            var southWest = bounds.getSouthWest();
+            var northEast = bounds.getNorthEast();
+            var lngSpan = northEast.lng() - southWest.lng();
+            var latSpan = northEast.lat() - southWest.lat();
+            var Startpoint = new google.maps.LatLng(southWest.lat() + latSpan * Math.random(),southWest.lng() + lngSpan * Math.random());
+            Startmarker.setPosition(Startpoint);
+            Startmarker.setMap(map);
+            var Endpoint = new google.maps.LatLng(southWest.lat() + latSpan * Math.random(),southWest.lng() + lngSpan * Math.random());
+            Endmarker.setPosition(Endpoint);
+            Endmarker.setMap(map);
+        });
+    </script>
+  </body>
+</html>
